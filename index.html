@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FOCUS HELSE</title>
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0B0F19">
+    <link rel="apple-touch-icon" href="assets/icon-192.png">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Top Header -->
+    <header class="top-header glass">
+        <button class="btn btn-icon" id="btn-menu" title="Menú Principal">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+        <h1 class="header-title">FOCUS HELSE</h1>
+        <div class="header-actions">
+            <button class="btn btn-icon" id="btn-enable-notif" title="Activar Notificaciones">
+                <i class="fa-solid fa-bell-slash" id="notif-icon"></i>
+            </button>
+        </div>
+    </header>
+
+    <div class="app-container">
+        <!-- Sliding Menu -->
+        <nav id="slide-menu" class="slide-menu glass">
+            <button class="btn btn-icon close-menu" id="btn-close-menu">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="logo-container">
+                <img src="assets/logo.png" id="main-logo" alt="FOCUS HELSE Logo" onerror="this.src='https://via.placeholder.com/150x50/111827/FF007F?text=FOCUS+HELSE';">
+            </div>
+            
+            <div class="nav-links">
+                <button class="nav-item active" data-target="view-matrix">
+                    <i class="fa-solid fa-table-cells-large"></i> Matrix de Foco
+                </button>
+                <button class="nav-item" data-target="view-calendar">
+                    <i class="fa-regular fa-calendar"></i> Calendario
+                </button>
+                <button class="nav-item" data-target="view-notes">
+                    <i class="fa-solid fa-book-open"></i> Cuaderno de Notas
+                </button>
+            </div>
+
+            <div class="sidebar-section mt-auto">
+                <h2><i class="fa-solid fa-bell"></i> Urgentes</h2>
+                <div id="alerts-container" class="alerts-list">
+                    <div class="empty-alerts">Todo tranquilo por ahora</div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Overlay to close menu on click -->
+        <div id="menu-overlay" class="menu-overlay"></div>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            
+            <!-- VIEW: MATRIX -->
+            <div id="view-matrix" class="view active">
+                <div class="view-header">
+                    <div>
+                        <h2>Matrix de Foco</h2>
+                        <p class="subtitle">Organiza tus prioridades</p>
+                    </div>
+                    <button class="btn btn-primary" id="btn-add-task">
+                        <i class="fa-solid fa-plus"></i> Nuevo Proyecto
+                    </button>
+                </div>
+
+                <div class="matrix-grid">
+                    <div class="matrix-quadrant q-urgent-important glass">
+                        <div class="quadrant-header">
+                            <h3><i class="fa-solid fa-fire"></i> Hacer Ahora</h3>
+                            <span class="badge badge-danger">Urgente & Importante</span>
+                        </div>
+                        <div class="task-list" id="list-q1" data-quadrant="1"></div>
+                    </div>
+                    <div class="matrix-quadrant q-not-urgent-important glass">
+                        <div class="quadrant-header">
+                            <h3><i class="fa-solid fa-calendar-check"></i> Agendar</h3>
+                            <span class="badge badge-primary">Importante</span>
+                        </div>
+                        <div class="task-list" id="list-q2" data-quadrant="2"></div>
+                    </div>
+                    <div class="matrix-quadrant q-urgent-not-important glass">
+                        <div class="quadrant-header">
+                            <h3><i class="fa-solid fa-users"></i> Delegar</h3>
+                            <span class="badge badge-warning">Urgente</span>
+                        </div>
+                        <div class="task-list" id="list-q3" data-quadrant="3"></div>
+                    </div>
+                    <div class="matrix-quadrant q-not-urgent-not-important glass">
+                        <div class="quadrant-header">
+                            <h3><i class="fa-solid fa-trash-can"></i> Congelar</h3>
+                            <span class="badge badge-muted">Backburner</span>
+                        </div>
+                        <div class="task-list" id="list-q4" data-quadrant="4"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIEW: CALENDAR -->
+            <div id="view-calendar" class="view">
+                <div class="view-header">
+                    <h2>Calendario</h2>
+                </div>
+                <div id="calendar" class="glass calendar-container"></div>
+            </div>
+
+            <!-- VIEW: NOTES -->
+            <div id="view-notes" class="view">
+                <div class="view-header">
+                    <h2>Cuaderno de Notas</h2>
+                    <span class="save-status" id="notes-status"><i class="fa-solid fa-check"></i> Guardado automático</span>
+                </div>
+                <div class="notes-container glass">
+                    <textarea id="notebook" placeholder="Escribe tus ideas, minutas o reflexiones aquí..."></textarea>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Modal para Nueva Tarea -->
+    <div class="modal-overlay" id="task-modal">
+        <div class="modal-content glass">
+            <h2>Nuevo Proyecto / Tarea</h2>
+            <form id="task-form">
+                <div class="form-group">
+                    <label>Título del Proyecto</label>
+                    <input type="text" id="task-title" required placeholder="Ej: Implementar servidor AWS" autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <label>Fecha Límite (Deadline)</label>
+                    <input type="datetime-local" id="task-deadline">
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="btn-cancel-task">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js'></script>
+    <script src="app.js"></script>
+    
+    <!-- PWA Service Worker Registration -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js');
+        });
+      }
+    </script>
+</body>
+</html>
