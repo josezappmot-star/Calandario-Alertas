@@ -2,7 +2,7 @@
   "name": "FOCUS HELSE",
   "short_name": "FocusHelse",
   "description": "Gestor de Prioridades y Alertas",
-  "start_url": "/index.html",
+  "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#0B0F19",
   "theme_color": "#0B0F19",

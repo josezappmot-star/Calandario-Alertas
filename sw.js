@@ -1,13 +1,13 @@
 const CACHE_NAME = 'focus-helse-v1';
 const urlsToCache = [
-  '/',
-  '/index.html',
-  '/style.css',
-  '/app.js',
-  '/manifest.json',
-  '/assets/logo.png',
-  '/assets/icon-192.png',
-  '/assets/icon-512.png',
+  './',
+  './index.html',
+  './style.css',
+  './app.js',
+  './manifest.json',
+  './assets/logo.png',
+  './assets/icon-192.png',
+  './assets/icon-512.png',
   'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&display=swap',
   'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css',
   'https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js'
